@@ -2,4 +2,4 @@
 Sean Weinstein's Repo
 
 
-Hi this is the updated version
+I am talking to the future. How are you? Is it raining yet?
