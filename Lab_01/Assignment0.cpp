@@ -11,65 +11,64 @@ using namespace std; //  Usual
 char RandomChar();
 string RandomString(int);
 string RandomParagraph(int, int);
-void Uploadtofile(string, string);
+void UploadToFile(string, string);
 int HigherValue(string, string);
 
 // Linked List
-template<class type>
+template<class Type>
 class Node
 {
 	public:
-		type data;
-		Node<type> *next;
-		Node<type>(const type& 	d): data(d), next() {}
-		Node<type>(const Node<type>& copyNode) : data(copyNode.data),next() {}
+		Type data;
+		Node<Type> *next;
+		Node<Type>(const Type& 	d): data(d), next() {}
+		Node<Type>(const Node<Type>& copyNode) : data(copyNode.data),next() {}
 
 	private:
-		Node<type>& operator=(const Node<type>&);
+		Node<Type>& operator=(const Node<Type>&);
 
 };
 
-template<class type>
+template<class Type>
 class LinkedList
 {
 public:
-	Node<type> * head;
-	Node<type> * tail;
+	Node<Type> * head;
+	Node<Type> * tail;
 
 	LinkedList(const LinkedList& LL);
 	LinkedList(): head(NULL), tail(NULL) {} ;
-	LinkedList(Node<type> * newNode) : head (newNode), tail(newNode) {};
+	LinkedList(Node<Type> * newNode) : head (newNode), tail(newNode) {};
 	~LinkedList();
 
-	void InsertToTail (type val);
-	void InsertToHead (type val);
-	void print();
-	void printBackwards();
-	void Insert_lexicographically (type val);
+	void InsertToTail (Type val);
+	void InsertToHead (Type val);
+	void Print();
+	void PrintBackwards();
 	void ReadFile(string);
 	void WriteFile(string);
-	void Swap(Node<type> *,Node<type> *,Node<type> *);
+	void Swap(Node<Type> *,Node<Type> *,Node<Type> *);
 	void OrderList();
 };
 
 
 
 
-template<class type>
-LinkedList<type>::LinkedList(const LinkedList<type>& LL) : head(NULL), tail(NULL)
+template<class Type>
+LinkedList<Type>::LinkedList(const LinkedList<Type>& LL) : head(NULL), tail(NULL)
 {
-    const Node<type> * curr = LL.head;
+    const Node<Type> * curr = LL.head;
 
     if (!head && curr)
     {
-        head = new Node<type>(curr->data);
+        head = new Node<Type>(curr->data);
         tail = head;
         curr = curr->next;
     }
 
     while (curr)
     {
-        Node<type> * newNode = new Node<type>(curr->data);
+        Node<Type> * newNode = new Node<Type>(curr->data);
         tail->next = newNode;
         tail = newNode;
         curr = curr->next;
@@ -77,10 +76,10 @@ LinkedList<type>::LinkedList(const LinkedList<type>& LL) : head(NULL), tail(NULL
 }
 
 
-template<class type>
-LinkedList<type>::~LinkedList()
+template<class Type>
+LinkedList<Type>::~LinkedList()
 {
-    Node<type> * curr = head;
+    Node<Type> * curr = head;
     while (head)
     {
         head = head->next;
@@ -89,10 +88,10 @@ LinkedList<type>::~LinkedList()
     }
 }
 
-template<class type>
-void LinkedList<type>::InsertToTail(type val)
+template<class Type>
+void LinkedList<Type>::InsertToTail(Type val)
 {
-    Node<type> * newNode = new Node<type>(val);
+    Node<Type> * newNode = new Node<Type>(val);
     if (tail == NULL)
     {
         newNode->next = tail;
@@ -104,20 +103,20 @@ void LinkedList<type>::InsertToTail(type val)
     tail = tail->next;
 }
 
-template<class type>
-void LinkedList<type>::InsertToHead(type val)
+template<class Type>
+void LinkedList<Type>::InsertToHead(Type val)
 {
-    Node<type> * newNode = new Node<type>(val);
+    Node<Type> * newNode = new Node<Type>(val);
     newNode->next = head;
     head = newNode;
     if (head->next == NULL)
         tail = newNode;
 }
 
-template<class type>
-void LinkedList<type>::print()
+template<class Type>
+void LinkedList<Type>::Print()
 {
-    Node<type> * curr = head;
+    Node<Type> * curr = head;
     while (curr)
     {
         cout<<curr->data<<" --> ";
@@ -126,11 +125,11 @@ void LinkedList<type>::print()
     cout<<"NULL"<<endl;
 }
 
-template<class type>
-void LinkedList<type>::printBackwards()
+template<class Type>
+void LinkedList<Type>::PrintBackwards()
 {
-    Node<type> * curr;
-    LinkedList ReversedList(new Node<type>(head->data));
+    Node<Type> * curr;
+    LinkedList ReversedList(new Node<Type>(head->data));
     curr = head->next;
     while (curr)
     {
@@ -148,25 +147,25 @@ void LinkedList<type>::printBackwards()
 }
 
 // Puts the Characters in the File in a List. First line is the end of the list
-template<class type>
-void LinkedList<type>::ReadFile(string FileName)
+template<class Type>
+void LinkedList<Type>::ReadFile(string FileName)
 {
 	fstream FS;
 	
-	string temp;
-	Node<type> * curr = head;
+	string output;
+	Node<Type> * curr = head;
 
 	FS.open(FileName,fstream::in | fstream::out);
-	FS >> temp;
+	FS >> output;
 	while(!FS.eof() )
 	{
 		
-		Node<type> * newNode = new Node<type>(temp);
+		Node<Type> * newNode = new Node<Type>(output);
 	    newNode->next = head;
 	    head = newNode;
 	    if (head->next == NULL)
 	        tail = newNode;
-	    FS >> temp;
+	    FS >> output;
 	}
 	FS.close();
 	
@@ -174,14 +173,14 @@ void LinkedList<type>::ReadFile(string FileName)
 }
 
 // Puts the List in a file starting with the head.
-template<class type>
-void LinkedList<type>::WriteFile(string FileName)
+template<class Type>
+void LinkedList<Type>::WriteFile(string FileName)
 {
 	fstream FS;
 
 	FS.open(FileName,fstream::in | fstream::out | fstream::trunc);
 
-	Node<type> * curr = head;
+	Node<Type> * curr = head;
     while (curr)
     {
         FS<<curr->data << endl;
@@ -190,24 +189,24 @@ void LinkedList<type>::WriteFile(string FileName)
 	FS.close();
 }
 
-template<class type>
-void LinkedList<type>::Swap(Node<type> * a,Node<type> *b,Node<type> *c)
+template<class Type>
+void LinkedList<Type>::Swap(Node<Type> * first,Node<Type> *second,Node<Type> *third)
 {
-	if(head == b)
-		head = c;
-	if(tail == c)
-		tail = b;
-	a-> next = c;
-	b-> next = c->next;
-	c-> next = b;
+	if(head == second)
+		head = third;
+	if(tail == third)
+		tail = second;
+	first -> next = third;
+	second -> next = third->next;
+	third -> next = second;
 }
 
-template<class type>
-void LinkedList<type>::OrderList()
+template<class Type>
+void LinkedList<Type>::OrderList()
 {
-   	Node<type> * curr = head;
-   	Node<type> * prev = head;
-   	Node<type> * pnext = head->next;
+   	Node<Type> * curr = head;
+   	Node<Type> * prev = head;
+   	Node<Type> * pnext = head->next;
    	int changed = 0;
     while (pnext)
     {
@@ -247,14 +246,14 @@ int main ()
 	chrono::high_resolution_clock::time_point t1 = std::chrono::high_resolution_clock::now();
 	// Create the Random String FIle
 	string a,b,c;
-	int l=30000,w=3;
+	int l=300,w=3;
 	srand(time(0));
 	a = RandomParagraph(l,w);
 	b = RandomParagraph(l,w);
 	c = RandomParagraph(l,w);
-	Uploadtofile(a, "RandomA.txt");
-	Uploadtofile(b, "RandomB.txt");
-	Uploadtofile(c, "RandomC.txt");
+	UploadToFile(a, "RandomA.txt");
+	UploadToFile(b, "RandomB.txt");
+	UploadToFile(c, "RandomC.txt");
 	
 	LinkedList<string> LL1,LL2,LL3;
 	LL1.ReadFile("RandomA.txt");
@@ -267,9 +266,9 @@ int main ()
 	LL3.OrderList();
 	LL3.WriteFile("OrderedRandomC.txt");
 
-	std::chrono::high_resolution_clock::time_point t2 = std::chrono::high_resolution_clock::now();
+	chrono::high_resolution_clock::time_point t2 = std::chrono::high_resolution_clock::now();
 
-	std::chrono::duration<double> time_span = std::chrono::duration<double>(t2 - t1);
+	chrono::duration<double> time_span = chrono::duration<double>(t2 - t1);
 	cout << "It took me " << time_span.count() << " seconds.";
   	cout << endl;
 
@@ -285,27 +284,27 @@ int main ()
 
 int HigherValue(string zero, string one)
 {
-	char z_zero,o_zero;
-	z_zero = zero[0];
-	o_zero = one[0];
-	if(z_zero == o_zero)
+	char zero_char,one_char;
+	zero_char = zero[0];
+	one_char = one[0];
+	if(zero_char == one_char)
 		return 1;
-	else if(z_zero < o_zero)
+	else if(zero_char < one_char)
 		return 1;
-	else if (o_zero < z_zero)
+	else if (one_char < zero_char)
 		return 0;
 	else
 		return HigherValue(zero.substr(1,zero.size()), one.substr(1,one.size()) );
 }
 
-string RandomParagraph(int NumberofLines, int LengthofEachLine)
+string RandomParagraph(int NumberOfLines, int LengthOfEachLine)
 {
 	string Paragraph = "";
 	int i;
 
-	for(i=0;i<=(NumberofLines-1);i++)
+	for(i=0;i<=(NumberOfLines-1);i++)
 	{
-		Paragraph = Paragraph + RandomString(LengthofEachLine) + "\n";
+		Paragraph = Paragraph + RandomString(LengthOfEachLine) + "\n";
 	}
 
 	return Paragraph;
@@ -341,7 +340,7 @@ char RandomChar()
 }
 
 
-void Uploadtofile(string text, string FileName)
+void UploadToFile(string text, string FileName)
 {
 
 	fstream FS;
